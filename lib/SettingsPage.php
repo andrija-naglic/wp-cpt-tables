@@ -90,7 +90,7 @@ class SettingsPage
 
         $postTypes = $this->getAllPostTypes();
         $enabled = $this->getEnabledPostTypes();
-
+        
         require_once __DIR__ . '/../templates/settings.php';
     }
 
@@ -149,8 +149,13 @@ class SettingsPage
             function ($postType) {
                 return ['name' => $postType['labels']['name'], 'slug' => $postType['name']];
             },
-            json_decode(json_encode(get_post_types(['public' => true], 'object')), true)
+            // json_decode(json_encode(get_post_types(['public' => true], 'object')), true)
+            json_decode(json_encode(get_post_types([], 'object')), true)
         );
+
+        // echo '<pre>';
+        // print_r( $postTypes );
+        // echo '</pre>';
 
         $postTypes = array_filter($postTypes, function ($item) {
             return !in_array($item['slug'], $this->exclude);
